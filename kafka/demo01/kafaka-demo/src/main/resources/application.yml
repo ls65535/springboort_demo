@@ -1,0 +1,38 @@
+server:
+  port: 9999
+spring:
+  application:
+    name: kafka-demo
+  kafka:
+    bootstrap-servers: 192.168.221.132:9092
+    consumer:
+      groupId: executor
+      enable-auto-commit: true
+      keyDeserializer: org.apache.kafka.common.serialization.StringDeserializer
+      valueDserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      groupId: executor
+      keyDeserializer: org.apache.kafka.common.serialization.StringSerializer
+      valueDserializer: org.apache.kafka.common.serialization.StringSerializer
+      batch-size: 16384
+      buffer-memory: 33554432
+  datasource:
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/test?serverTimezone=GMT%2B8
+    username: root
+    password: ls123
+mybatis:
+  mapUnderscoreToCamelCase: true
+  typeAliasesPackage: com.ls.kafka.entity
+  mapperLocations: classpath:mappers/*.xml
+mybatis-plus:
+  map-underscore-to-camel-case: true
+  mapper-locations: classpath:mappers/*.xml
+  type-aliases-package: com.ls.kafka.entity
+  configuration:      #配置打印mysql日志
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+logging:
+  level:
+    com.ls.mapper: debug
